@@ -193,3 +193,12 @@ function desligar_todas_lampadas() {
     clienteWeb.send(msg);
 }
 
+// Adiciona vibração a todos os botões da página automaticamente
+document.querySelectorAll('button').forEach(botao => {
+    botao.addEventListener('click', () => {
+        if (navigator.vibrate) {
+            navigator.vibrate(50); // Uma vibração bem curta para dar sensação de clique real
+        }
+    });
+});
+
