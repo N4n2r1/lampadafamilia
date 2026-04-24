@@ -67,6 +67,11 @@ body {
     padding: var(--spacing-lg) var(--spacing-md);
 }
 
+body {
+    transition: background-color 0.15s rgb(81, 3, 3); /* Faz as cores deslizarem suavemente */
+    background-color: #000000; /* Cor inicial */
+}
+
 /* =========================
    🖼️ LOGO
 ========================= */

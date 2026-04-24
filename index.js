@@ -6,6 +6,68 @@ clienteWeb = new Paho.MQTT.Client(
     clienteId
 );
 
+function modo_ladrao() {
+    let tempoDecorrido = 0;
+    const intervaloTempo = 300; 
+    const tempoTotal = 5000;
+    const body = document.body; // Referência para o fundo do site
+
+    travarBotoes(true);
+
+    const loopAlarme = setInterval(() => {
+        const lampadas = document.querySelectorAll('[id^="lp-"]');
+        const acao = (tempoDecorrido / intervaloTempo) % 2 === 0 ? 'ligar' : 'desligar';
+
+        // 1. VIBRAÇÃO (Vibra forte quando 'liga' e para quando 'desliga')
+        if (acao === 'ligar' && navigator.vibrate) {
+            navigator.vibrate(200); 
+        }
+
+        // 2. BACKGROUND PISCANDO (Vermelho de alerta)
+        if (acao === 'ligar') {
+            body.style.backgroundColor = "#b30000"; // Vermelho escuro alerta
+        } else {
+            body.style.backgroundColor = "#000000"; // Volta para o preto
+        }
+
+        // 3. ATUALIZA VISUAL DAS LÂMPADAS
+        lampadas.forEach(lp => {
+            acao === 'ligar' ? lp.classList.add('acesa') : lp.classList.remove('acesa');
+        });
+
+        // 4. ENVIA MQTT MESTRE
+        const msg = new Paho.MQTT.Message('');
+        msg.destinationName = `senai510/lampada/${acao}`; 
+        clienteWeb.send(msg);
+
+        tempoDecorrido += intervaloTempo;
+
+        if (tempoDecorrido >= tempoTotal) {
+            clearInterval(loopAlarme);
+            
+            // RESET FINAL: Volta tudo ao normal
+            body.style.backgroundColor = ""; 
+            desligar_todas_lampadas();
+            travarBotoes(false);
+        }
+    }, intervaloTempo);
+}
+
+// Função auxiliar para não repetir código
+function atualizarFisico(comodo, acao) {
+    // 1. Atualiza a tela
+    const id = comodo === 'sala' || comodo === 'cozinha' ? `lp-${comodo}` : `lp-qt${comodo.slice(-1)}`;
+    const el = document.getElementById(id);
+    if(el) {
+        acao === 'ligar' ? el.classList.add('acesa') : el.classList.remove('acesa');
+    }
+
+    // 2. Envia para o MQTT
+    const msg = new Paho.MQTT.Message('');
+    msg.destinationName = `senai510/lampada/${comodo}/${acao}`;
+    clienteWeb.send(msg);
+}
+
 // 1. Função para travar ou destravar os botões
 function travarBotoes(travar) {
     // Seleciona todos os botões (você pode colocar uma classe neles, ex: '.btn-lampada' se tiver outros botões na tela)
@@ -130,5 +192,4 @@ function desligar_todas_lampadas() {
     msg.destinationName = 'senai510/lampada/desligar'; 
     clienteWeb.send(msg);
 }
-
 
