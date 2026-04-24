@@ -99,3 +99,36 @@ function desligar_lampada_quarto2() {
     msg.destinationName = 'senai510/lampada/quarto2/desligar'; 
     clienteWeb.send(msg);
 }
+
+function ligar_todas_lampadas() {
+    // 1. Seleciona TODAS as lâmpadas que começam com o ID "lp-"
+    // Isso pega lp-sala, lp-cozinha, lp-qt1 e lp-qt2 de uma vez só
+    const lampadas = document.querySelectorAll('[id^="lp-"]'); 
+    
+    // 2. Acende cada uma delas visualmente
+    lampadas.forEach(lp => {
+        lp.classList.add('acesa');
+    });
+
+    // 3. Envia o comando MQTT mestre
+    const msg = new Paho.MQTT.Message('');
+    msg.destinationName = 'senai510/lampada/ligar'; 
+    clienteWeb.send(msg);
+}
+
+function desligar_todas_lampadas() {
+    // 1. Seleciona TODAS as lâmpadas
+    const lampadas = document.querySelectorAll('[id^="lp-"]');
+    
+    // 2. Apaga cada uma delas visualmente
+    lampadas.forEach(lp => {
+        lp.classList.remove('acesa');
+    });
+
+    // 3. Envia o comando MQTT mestre
+    const msg = new Paho.MQTT.Message('');
+    msg.destinationName = 'senai510/lampada/desligar'; 
+    clienteWeb.send(msg);
+}
+
+
