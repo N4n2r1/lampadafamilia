@@ -1,3 +1,6 @@
+const somSirene = new Audio('sirene.mp3');
+somSirene.loop = true; // Faz a sirene repetir enquanto o alerta estiver ativo
+
 let clienteWeb = null;
 const clienteId = "Esp32RAP";
 clienteWeb = new Paho.MQTT.Client(
@@ -10,24 +13,27 @@ function modo_ladrao() {
     let tempoDecorrido = 0;
     const intervaloTempo = 300; 
     const tempoTotal = 3000;
-    const body = document.body; // Referência para o fundo do site
+    const body = document.body;
 
     travarBotoes(true);
+    
+    // --- NOVO: Toca a sirene ---
+    somSirene.play().catch(e => console.log("Erro ao tocar áudio: ", e));
 
     const loopAlarme = setInterval(() => {
         const lampadas = document.querySelectorAll('[id^="lp-"]');
         const acao = (tempoDecorrido / intervaloTempo) % 2 === 0 ? 'ligar' : 'desligar';
 
-        // 1. VIBRAÇÃO (Vibra forte quando 'liga' e para quando 'desliga')
+        // 1. VIBRAÇÃO
         if (acao === 'ligar' && navigator.vibrate) {
             navigator.vibrate(200); 
         }
 
-        // 2. BACKGROUND PISCANDO (Vermelho de alerta)
+        // 2. BACKGROUND PISCANDO
         if (acao === 'ligar') {
-            body.style.backgroundColor = "#b30000"; // Vermelho escuro alerta
+            body.style.backgroundColor = "#b30000"; 
         } else {
-            body.style.backgroundColor = "#000000"; // Volta para o preto
+            body.style.backgroundColor = "#000000"; 
         }
 
         // 3. ATUALIZA VISUAL DAS LÂMPADAS
@@ -45,14 +51,17 @@ function modo_ladrao() {
         if (tempoDecorrido >= tempoTotal) {
             clearInterval(loopAlarme);
             
-            // RESET FINAL: Volta tudo ao normal
+            // --- NOVO: Para a sirene e reseta o tempo do áudio ---
+            somSirene.pause();
+            somSirene.currentTime = 0; 
+
+            // RESET FINAL
             body.style.backgroundColor = ""; 
             desligar_todas_lampadas();
             travarBotoes(false);
         }
     }, intervaloTempo);
 }
-
 // Função auxiliar para não repetir código
 function atualizarFisico(comodo, acao) {
     // 1. Atualiza a tela
