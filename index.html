@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Home - Iluminação</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div class="logo-container">
+        <img src="https://tse4.mm.bing.net/th/id/OIP.gihovp_ZauJy_z8zSKvaIwHaB5?rs=1&pid=ImgDetMain&o=7&rm=3" alt="">
+        </div>
+
+    <div class="dashboard">
+
+        <div class="card-controle">
+            <header>
+                <h1>Prédio SENAI</h1>
+                <h2>Lâmpada da Sala</h2>
+            </header>
+
+            <div class="lampada-container">
+                <div class="lampada" id="lp-sala">
+                    💡
+                </div>
+            </div>
+
+            <div class="controles">
+                <button class="btn btn-ligar" onclick="ligar_lampada_sala()">Ligar</button>
+                <button class="btn btn-desligar" onclick="desligar_lampada_sala()">Desligar</button>
+            </div>
+        </div>
+
+        <div class="card-controle">
+            <header>
+                <h1>Prédio SENAI</h1>
+                <h2>Lâmpada da Cozinha</h2>
+            </header>
+
+            <div class="lampada-container">
+                <div class="lampada" id="lp-cozinha">
+                    💡
+                </div>
+            </div>
+
+            <div class="controles">
+                <button class="btn btn-ligar" onclick="ligar_lampada_cozinha()">Ligar</button>
+                <button class="btn btn-desligar" onclick="desligar_lampada_cozinha()">Desligar</button>
+            </div>
+        </div>
+
+        <div class="card-controle">
+            <header>
+                <h1>Prédio SENAI</h1>
+                <h2>Lâmpada do 1° quarto</h2>
+            </header>
+
+            <div class="lampada-container">
+                <div class="lampada" id="lp-qt1">
+                    💡
+                </div>
+            </div>
+
+            <div class="controles">
+                <button class="btn btn-ligar" onclick="ligar_lampada_quarto1()">Ligar</button>
+                <button class="btn btn-desligar" onclick="desligar_lampada_quarto1()">Desligar</button>
+            </div>
+        </div>
+
+        <div class="card-controle">
+            <header>
+                <h1>Prédio SENAI</h1>
+                <h2>Lâmpada do 2° quarto</h2>
+            </header>
+
+            <div class="lampada-container">
+                <div class="lampada" id="lp-qt2">
+                    💡
+                </div>
+            </div>
+
+            <div class="controles">
+                <button class="btn btn-ligar" onclick="ligar_lampada_quarto2()">Ligar</button>
+                <button class="btn btn-desligar" onclick="desligar_lampada_quarto2()">Desligar</button>
+            </div>
+        </div>
+
+    </div> <script src="mqttws31.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

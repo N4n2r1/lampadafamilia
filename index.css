@@ -1,0 +1,327 @@
+/* =========================
+   🎯 IMPORTS & DESIGN SYSTEM
+========================= */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+
+:root {
+    /* 🎨 Cores (Dark padrão) */
+    --bg: #080808;
+    --surface: #121212;
+    --surface-alt: #0a0a0a;
+    --text: #ffffff;
+    --primary: #ff003c;
+
+    /* 🌈 Efeitos */
+    --glow-primary: 0 0 20px var(--primary);
+    --glow-strong: 0 0 60px rgba(255, 255, 255, 0.8);
+
+    /* 📏 Espaçamento */
+    --spacing-sm: 10px;
+    --spacing-md: 20px;
+    --spacing-lg: 40px;
+
+    /* 🔤 Tipografia */
+    --font-main: 'Rajdhani', 'Poppins', sans-serif;
+
+    /* ⚡ Transições */
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* 🌞 Light Mode */
+[data-theme="light"] {
+    --bg: #f5f5f5;
+    --surface: #ffffff;
+    --surface-alt: #eaeaea;
+    --text: #111;
+    --primary: #ff003c;
+}
+
+/* =========================
+   🔄 RESET
+========================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-main);
+}
+
+/* =========================
+   🌌 BODY
+========================= */
+body {
+    background-color: var(--bg);
+    background-image:
+        linear-gradient(rgba(255, 0, 60, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 0, 60, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--spacing-lg) var(--spacing-md);
+}
+
+/* =========================
+   🖼️ LOGO
+========================= */
+.logo-container {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 0, 60, 0.3);
+}
+
+.logo-container img {
+    height: 80px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+}
+
+/* =========================
+   🧠 LAYOUT
+========================= */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+}
+
+/* =========================
+   🧩 CARD
+========================= */
+.card-controle {
+    background: linear-gradient(135deg, var(--surface), var(--surface-alt));
+    padding: var(--spacing-lg) var(--spacing-md);
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%,
+        0 100%
+    );
+
+    border-top: 2px solid var(--text);
+    border-bottom: 4px solid var(--primary);
+
+    box-shadow: 0 10px 30px rgba(255, 0, 60, 0.05);
+
+    text-align: center;
+    width: 100%;
+    max-width: 320px;
+
+    position: relative;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.card-controle:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(255, 0, 60, 0.2);
+}
+
+/* HUD detalhe */
+.card-controle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+}
+
+.card-controle::after {
+    content: "SYS ACTIVE";
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 0.6rem;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+}
+
+/* =========================
+   🔤 HEADERS
+========================= */
+header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+}
+
+header h2 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   💡 LÂMPADA
+========================= */
+.lampada-container {
+    margin: var(--spacing-lg) 0;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lampada {
+    font-size: 80px;
+    filter: grayscale(100%) brightness(0.4);
+    transition: all var(--transition-smooth);
+    user-select: none;
+}
+
+/* 🔥 Animação */
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 5px var(--primary); }
+    50% { box-shadow: 0 0 25px var(--primary); }
+    100% { box-shadow: 0 0 5px var(--primary); }
+}
+
+.lampada.acesa {
+    filter:
+        grayscale(0%)
+        brightness(1.2)
+        drop-shadow(var(--glow-primary))
+        drop-shadow(var(--glow-strong));
+    transform: scale(1.1);
+    animation: pulseGlow 2s infinite;
+}
+
+/* =========================
+   🎮 BOTÕES
+========================= */
+.controles {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+
+    border: none;
+    cursor: pointer;
+
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    position: relative;
+    overflow: hidden;
+
+    transition: all var(--transition-fast);
+
+    clip-path: polygon(
+        10px 0,
+        100% 0,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        0 100%,
+        0 10px
+    );
+}
+
+/* Efeito energia */
+.btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.btn:hover::after {
+    opacity: 1;
+}
+
+/* Ligar */
+.btn-ligar {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--text);
+}
+
+.btn-ligar:hover {
+    background: var(--text);
+    color: var(--bg);
+    box-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
+
+/* Desligar */
+.btn-desligar {
+    background: rgba(255, 0, 60, 0.05);
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.btn-desligar:hover {
+    background: var(--primary);
+    color: #fff;
+    box-shadow: var(--glow-primary);
+}
+
+/* Clique */
+.btn:active {
+    transform: scale(0.95);
+}
+
+/* =========================
+   📱 RESPONSIVO
+========================= */
+@media (max-width: 900px) {
+    .card-controle {
+        max-width: 280px;
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .dashboard {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-controle {
+        max-width: 100%;
+    }
+
+    .lampada {
+        font-size: 60px;
+    }
+
+    header h1 {
+        font-size: 1.4rem;
+    }
+
+    header h2 {
+        font-size: 0.9rem;
+    }
+}
