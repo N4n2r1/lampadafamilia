@@ -167,7 +167,7 @@ header h1 {
 }
 
 header h2 {
-    font-size: 1.1rem;
+    font-size: 30px;
     font-weight: 600;
     color: var(--primary);
     text-transform: uppercase;
@@ -217,6 +217,15 @@ header h2 {
     gap: 15px;
 }
 
+/* Centraliza e coloca os botões lado a lado */
+.controles, .controles-mestres {
+    display: flex;
+    justify-content: center; /* Centraliza os botões no meio do card */
+    gap: 15px; /* Adiciona um espaço de 15px entre o botão de Ligar e Desligar */
+    margin: 20px 0; /* Dá um respiro em cima e embaixo dos botões */
+    flex-wrap: wrap; /* Se a tela do celular for muito pequena, ele ajusta automaticamente */
+}
+
 .btn {
     flex: 1;
     padding: 12px 0;
@@ -263,6 +272,7 @@ header h2 {
     background: transparent;
     color: var(--text);
     border: 1px solid var(--text);
+    font-size: 20px;
 }
 
 .btn-ligar:hover {
@@ -276,6 +286,7 @@ header h2 {
     background: rgba(255, 0, 60, 0.05);
     color: var(--primary);
     border: 1px solid var(--primary);
+    font-size: 20px;
 }
 
 .btn-desligar:hover {
@@ -297,6 +308,13 @@ header h2 {
         max-width: 280px;
         padding: 30px 20px;
     }
+}
+
+.card-controle header h2 {
+    min-height: 3em; /* Ajuste esse valor até que caibam duas linhas */
+    display: flex;
+    align-items: center; /* Centraliza o texto verticalmente */
+    justify-content: center;
 }
 
 @media (max-width: 600px) {
