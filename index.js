@@ -9,7 +9,7 @@ clienteWeb = new Paho.MQTT.Client(
 function modo_ladrao() {
     let tempoDecorrido = 0;
     const intervaloTempo = 300; 
-    const tempoTotal = 5000;
+    const tempoTotal = 3000;
     const body = document.body; // Referência para o fundo do site
 
     travarBotoes(true);
